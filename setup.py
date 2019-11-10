@@ -24,7 +24,10 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     python_requires=">=3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
-    setup_requires=["wheel"],
+    setup_requires=[
+        "wheel",
+        "pip",
+    ],
     install_requires=[
         "ipython",
         "pytest",
