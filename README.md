@@ -1,8 +1,13 @@
 # NFLLunch
 ### Prerequisites
-1. Install dependencies
+1. Create virtual env:
 ```
-pip3 install -r requirements.txt
+python3 -m venv env
+. env/bin/activate
+```
+2. Install dependencies
+```
+pip3 install .
 ```
 
 ### Other
