@@ -7,7 +7,7 @@ python3 -m venv env
 ```
 2. Install dependencies
 ```
-pip3 install -r requirements.txt
+pip3 install .
 ```
 
 ### Other
