@@ -36,6 +36,6 @@ setup(
         "click",
         "flask-rebar",
         "flask-marshmallow",
-        "pynfl"
+        "nflgame-redux==2.0.1b1"
     ],
 )
