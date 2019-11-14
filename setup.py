@@ -36,7 +36,6 @@ setup(
         "click",
         "flask-rebar",
         "flask-marshmallow",
-        "requests==2.22.0",
         "nflgame-redux==2.0.1b1"
     ],
 )
