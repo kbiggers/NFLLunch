@@ -27,10 +27,10 @@ class Team:
     def set_games(self, games: List[Any]) -> None:
         self.__games = games
 
-    def get_players(self):
+    def get_players(self) -> List[Any]:
         return self.__players
 
-    def get_games(self):
+    def get_games(self) -> List[Any]:
         return self.__games
 
 
@@ -69,7 +69,7 @@ def populate_team_data(team: str) -> Team:
     return t
 
 
-def main():
+def main() -> None:
     """
     Also for demo purposes, will be removed later on
     """
