@@ -37,6 +37,7 @@ setup(
         "flask-rebar",
         "flask-marshmallow",
         "sleeper-api-wrapper",
-        "nflgame-redux==2.0.1b1"
+        "nflgame-redux==2.0.1b1",
+        "ff-espn-api"
     ],
 )
