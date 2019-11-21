@@ -5,9 +5,10 @@ from datetime import datetime
 from typing import Any, List
 
 import nflgame
+import logging
 
 CURRENT_YEAR = datetime.today().year
-
+LOG = logging.getLogger("NFLLunch.nfl_helper")
 
 class Team:
     """
