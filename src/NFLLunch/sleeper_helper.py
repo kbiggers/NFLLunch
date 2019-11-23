@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
 from typing import Union
+
 import sleeper_wrapper as sleeper
 
 YEAR = datetime.now().year
@@ -34,9 +35,9 @@ class SleeperHelper:
         """
         all_players = self.__get_all_players()
         return {
-            k: all_players[k]
-            for k in set(all_players)
-            - set(self.__get_all_deffensive_players())
+            d: v
+            for d, v in self.__get_all_players().items()
+            if v['position'] != 'DEF'
         }
 
     def id_from_player_name(self, full_name: str) -> Union[str, None]:
