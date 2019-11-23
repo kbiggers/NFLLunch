@@ -9,9 +9,7 @@ LOG = logging.getLogger("NFLLunch.sleeper_helper")
 
 
 class SleeperHelper:
-    def __init__(
-        self, sleeper, week, season=YEAR, season_type='regular'
-    ) -> None:
+    def __init__(self, sleeper) -> None:
         self.client = sleeper
 
     def __get_all_players(self):
