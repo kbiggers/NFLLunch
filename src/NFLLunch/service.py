@@ -1,10 +1,13 @@
 from flask_rebar import errors, Rebar
 from models import HelloWorldRequestSchema, HelloWorldResponseSchema
+import logging
 
 rebar = Rebar()
 
 # All handler URL rules will be prefixed by '/v1'
 registry = rebar.create_handler_registry(prefix='/v1')
+
+LOG = logging.getLogger("NFLLunch.service")
 
 
 @registry.handles(
@@ -18,6 +21,7 @@ def post_hello_world():
     We're saying hello!
     """
     # The query string has already been validated by `query_string_schema`
+    LOG.info('this is a test message!')
     name = rebar.validated_body.get('name')
 
     ...
