@@ -24,7 +24,7 @@ class SleeperHelper:
         """
         return {
             d: v
-            for d, v in self.__get_all_players.items()
+            for d, v in self.__get_all_players().items()
             if v['position'] == 'DEF'
         }
 
@@ -32,10 +32,11 @@ class SleeperHelper:
         """
             Return all offensive NFL players
         """
-        all_players = self.__get_all_players
+        all_players = self.__get_all_players()
         return {
             k: all_players[k]
-            for k in set(all_players) - set(self.__get_all_deffensive_players)
+            for k in set(all_players)
+            - set(self.__get_all_deffensive_players())
         }
 
     def id_from_player_name(self, full_name: str) -> Union[str, None]:
@@ -43,7 +44,7 @@ class SleeperHelper:
             Return the ID of a given player
         """
         full_name = full_name.title()
-        for player_id, v in self.__get_all_offensive_players.items():
+        for player_id, v in self.__get_all_offensive_players().items():
             try:
                 if v['full_name'] == full_name:
                     return player_id
@@ -59,7 +60,7 @@ class SleeperHelper:
             Return the ID of a given team's defense.
         """
         def_name = def_name.lower()
-        for def_id, v in self.__get_all_deffensive_players.items():
+        for def_id, v in self.__get_all_deffensive_players().items():
             del v['fantasy_positions']
             del v['active']
             if def_name in [t.lower() for t in list(v.values())]:
