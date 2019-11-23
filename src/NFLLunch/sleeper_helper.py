@@ -1,38 +1,59 @@
-import sleeper_wrapper as sleeper
 from datetime import datetime
+from typing import Union
+import sleeper_wrapper as sleeper
 
 YEAR = datetime.now().year
+# helper = SleeperHelper(sleeper, 11)
 
 
 class SleeperHelper:
-    def __init__(self, sleeper, season=YEAR, season_type='regular'):
+    def __init__(
+        self, sleeper, week, season=YEAR, season_type='regular'
+    ) -> None:
         self.client = sleeper
         self.season = season
         self.season_type = season_type
-        self.players = self.sleeper_client.get_all_players()
+        self.week = week
+        self.all_players = self.client.Players().get_all_players()
+        self.defenses = {
+            d: v for d, v in self.all_players.items() if v['position'] == 'DEF'
+        }
+        self.players = {
+            k: self.all_players[k]
+            for k in set(self.all_players) - set(self.defenses)
+        }
 
-    def player_from_id(self, player):
-        pass
-
-    def get_stats(self, season=self.season: int,
-        season_type=self.season_type: str, week: int
-    ):
+    def id_from_player_name(self, full_name: str) -> Union[str, None]:
         """
-        Return specified stat type
+            Return the ID of a given player
         """
-        stats_client = self.client.Stats()
-        season_stats = stats_client.get_all_stats(season_type, season)
-        week_stats = stats_client.get_week_stats(season_type, season, week)
-        return season_stats, week_stats
+        full_name = full_name.title()
+        for player_id, v in self.players.items():
+            try:
+                if v['full_name'] == full_name:
+                    return player_id
+            except KeyError:
+                continue
+        return None
 
-    def trending_players(self, hours: int = 24, results: int = 25, mode: str):
-        valid_modes = ['add', 'drop']
-        if mode not in valid_modes:
-            return
-        return self.client.Players().get_trending_players(
-            sport='nfl',
-            add_drop='mode',
-            hours=hours,
-            limit=limit
-        )
-        
+    def id_from_defense_name(self, def_name: str) -> Union[str, None]:
+        """
+            Return the ID of a given team's defense.
+        """
+        def_name = def_name.lower()
+        for def_id, v in self.defenses.items():
+            try:
+                del v['fantasy_positions']
+                del v['active']
+                if def_name in [t.lower() for t in list(v.values())]:
+                    return def_id
+            except KeyError:
+                continue
+        return None
+
+
+def main() -> None:
+    """
+        For testing
+    """
+    pass
