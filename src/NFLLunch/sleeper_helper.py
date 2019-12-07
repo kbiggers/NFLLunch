@@ -33,7 +33,6 @@ class SleeperHelper:
         """
             Return all offensive NFL players
         """
-        all_players = self.__get_all_players()
         return {
             d: v
             for d, v in self.__get_all_players().items()
@@ -51,7 +50,7 @@ class SleeperHelper:
                     return player_id
             except KeyError:
                 logging.info(
-                    "KeyError: No 'full_name' for player %s", player_id
+                    f"KeyError: No 'full_name' for player {player_id}"
                 )
                 continue
         return None
@@ -77,13 +76,15 @@ class SleeperHelper:
         """
         if season_type not in SEASON_TYPES:
             logging.warning(
-                "'%s' is not a valid season type. Valid options are: %s".format(
-                    season_type, ', '.join(SEASON_TYPES)
+                (
+                    f"'{season_type}' is not a valid season type. "
+                    f"Valid options are: {', '.join(SEASON_TYPES)}"
                 )
             )
             return None
-        return self.client.Stats().get_week_stats(
-            season_type, YEAR, week)[str(player_id)]
+        return self.client.Stats().get_week_stats(season_type, YEAR, week)[
+            str(player_id)
+        ]
 
     def player_season_stats(
         self, player_id: Union[str, int], season_type: str
@@ -93,8 +94,9 @@ class SleeperHelper:
         """
         if season_type not in SEASON_TYPES:
             logging.warning(
-                "'%s' is not a valid season type. Valid options are: %s".format(
-                    season_type, ', '.join(SEASON_TYPES)
+                (
+                    f"'{season_type}' is not a valid season type. "
+                    f"Valid options are: {', '.join(SEASON_TYPES)}"
                 )
             )
             return None
@@ -104,15 +106,16 @@ class SleeperHelper:
 
     def player_week_projection(
         self, player_id: Union[str, int], season_type: str,
-        week: Union[str, int], scoring_only: bool = False 
+        week: Union[str, int], scoring_only: bool = False
     ) -> dict:
         """
             Returns the weekly projections for a player
         """
         if season_type not in SEASON_TYPES:
             logging.warning(
-                "'%s' is not a valid season type. Valid options are: %s".format(
-                    season_type, ', '.join(SEASON_TYPES)
+                (
+                    f"'{season_type}' is not a valid season type. "
+                    f"Valid options are: {', '.join(SEASON_TYPES)}"
                 )
             )
         if scoring_only:
