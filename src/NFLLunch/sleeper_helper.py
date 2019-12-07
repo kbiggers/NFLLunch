@@ -6,7 +6,7 @@ import sleeper_wrapper as sleeper
 
 YEAR = datetime.now().year
 LOG = logging.getLogger("NFLLunch.sleeper_helper")
-# helper = SleeperHelper(sleeper, 11)
+SEASON_TYPES = ['pre', 'regular', 'post']
 
 
 class SleeperHelper:
@@ -67,6 +67,65 @@ class SleeperHelper:
             if def_name in [t.lower() for t in list(v.values())]:
                 return def_id
         return None
+
+    def player_week_stats(
+        self, player_id: Union[str, int], season_type: str,
+        week: Union[str, int]
+    ) -> dict:
+        """
+            Return stats for a given player
+        """
+        if season_type not in SEASON_TYPES:
+            logging.warning(
+                "'%s' is not a valid season type. Valid options are: %s".format(
+                    season_type, ', '.join(SEASON_TYPES)
+                )
+            )
+            return None
+        return self.client.Stats().get_week_stats(
+            season_type, YEAR, week)[str(player_id)]
+
+    def player_season_stats(
+        self, player_id: Union[str, int], season_type: str
+    ) -> dict:
+        """
+            Return stats for a given player
+        """
+        if season_type not in SEASON_TYPES:
+            logging.warning(
+                "'%s' is not a valid season type. Valid options are: %s".format(
+                    season_type, ', '.join(SEASON_TYPES)
+                )
+            )
+            return None
+        return self.client.Stats().get_all_stats(season_type, YEAR)[
+            str(player_id)
+        ]
+
+    def player_week_projection(
+        self, player_id: Union[str, int], season_type: str,
+        week: Union[str, int], scoring_only: bool = False 
+    ) -> dict:
+        """
+            Returns the weekly projections for a player
+        """
+        if season_type not in SEASON_TYPES:
+            logging.warning(
+                "'%s' is not a valid season type. Valid options are: %s".format(
+                    season_type, ', '.join(SEASON_TYPES)
+                )
+            )
+        if scoring_only:
+            return {
+                k: v
+                for k, v in self.client.Stats().get_week_projections(
+                    season_type, YEAR, week
+                )[str(player_id)].items()
+                if k.startswith('pts')
+            }
+        return self.client.Stats().get_week_projections(
+            season_type, YEAR, week
+        )[str(player_id)]
 
 
 def main() -> None:
