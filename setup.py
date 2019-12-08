@@ -27,6 +27,7 @@ setup(
     setup_requires=[
         "wheel",
         "pip",
+        "nodejs"
     ],
     install_requires=[
         "ipython",
